@@ -1,7 +1,7 @@
 import { catchAsyncErrors } from "../middleware/catchAsyncError.js";
 import { ErrorHandler } from "../middleware/error.js";
 import userSchema from "../models/userSchema.js";
-import { sendToken } from "../utils/jwtToken.js";
+import { deleteToken, sendToken } from "../utils/jwtToken.js";
 
 export const Register = catchAsyncErrors(async (req, res, next) => {
   const { name, email, phone, role, password } = req.body;
@@ -48,16 +48,17 @@ export const login = catchAsyncErrors(async (req, res, next) => {
 });
 
 export const logout = catchAsyncErrors(async (req, res, next) => {
-  res
-    .status(201)
-    .cookie("token", "", {
-      httpOnly: true,
-      expires: new Date(Date.now()),
-    })
-    .json({
-      success: true,
-      message: "User logged out successfully...!",
-    });
+  // res
+  //   .status(201)
+  //   .cookie("token", "", {
+  //     httpOnly: true,
+  //     expires: new Date(Date.now()),
+  //   })
+  //   .json({
+  //     success: true,
+  //     message: "User logged out successfully...!",
+  //   });
+  deleteToken(res, "You have been logged out.");
 });
 
 export const getUser = catchAsyncErrors((req, res, next) => {

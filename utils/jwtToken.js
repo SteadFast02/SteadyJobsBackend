@@ -16,3 +16,19 @@ export const sendToken = (user, statusCode, res, message) => {
     token,
   });
 };
+export const deleteToken = (res, message) => {
+  const options = {
+    expires: new Date(Date.now() - 1000),
+    httpOnly: true,
+    secure: true,
+    sameSite: "None",
+  };
+
+  res
+    .status(200)
+    .cookie("token", "", options)
+    .json({
+      success: true,
+      message: message || "Logged out successfully",
+    });
+};
